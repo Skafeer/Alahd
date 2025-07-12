@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تذكير دعاء العهد بعد صلاة الفجر</title>
+    <title>تذكير دعاء العهد - تحديد الموقع الجغرافي الدقيق</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -17,6 +17,7 @@
             --silver: #c0c0c0;
             --danger: #e74c3c;
             --success: #27ae60;
+            --warning: #f39c12;
             --radius: 16px;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             --transition: all 0.4s ease;
@@ -44,12 +45,12 @@
         .container {
             width: 100%;
             max-width: 900px;
-            background: rgba(25, 40, 55, 0.7);
+            background: rgba(25, 40, 55, 0.85);
             backdrop-filter: blur(12px);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
 
@@ -108,7 +109,7 @@
 
         @media (min-width: 768px) {
             .main-content {
-                grid-template-columns: 1.5fr 1fr;
+                grid-template-columns: 1fr 1fr;
             }
         }
 
@@ -118,12 +119,12 @@
             padding: 30px;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
         }
 
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             background: rgba(255, 255, 255, 0.09);
         }
@@ -155,7 +156,7 @@
             display: flex;
             justify-content: space-between;
             padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .info-label {
@@ -174,47 +175,50 @@
             min-width: 100px;
         }
 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 25px 0;
-            flex-wrap: wrap;
-        }
-
-        .countdown-item {
+        .accuracy-meter {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 20px 15px;
-            min-width: 90px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: var(--transition);
+            gap: 10px;
+            margin: 20px 0;
         }
 
-        .countdown-item:hover {
-            transform: scale(1.05);
-            background: rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #aaa;
         }
 
-        .countdown-value {
-            font-size: 2.4rem;
-            font-weight: 800;
+        .meter-bar {
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--danger), var(--warning), var(--success));
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .meter-indicator {
+            position: absolute;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: white;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .accuracy-value {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 5px;
             color: var(--success);
-            line-height: 1;
-            font-family: monospace;
-            text-shadow: 0 0 10px rgba(39, 174, 96, 0.4);
-        }
-
-        .countdown-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-top: 8px;
-            color: #ccc;
         }
 
         .btn {
@@ -257,13 +261,30 @@
             background: linear-gradient(to right, #b8860b, #d4af37);
         }
 
-        .notification-section {
+        .btn-danger {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(to right, #c0392b, #e74c3c);
+        }
+
+        .location-section {
             margin-top: 25px;
             padding-top: 25px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .notification-status {
+        .location-info {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .location-status {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -291,69 +312,72 @@
             background: var(--danger);
         }
 
-        .location-section {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .status-warning {
+            background: var(--warning);
         }
 
-        .location-info {
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            margin-bottom: 20px;
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .method-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .progress-container {
-            margin: 30px 0;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
+        .method-icon {
+            font-size: 1.8rem;
             margin-bottom: 10px;
-            font-size: 1.1rem;
+            color: var(--secondary);
         }
 
-        .progress-bar {
-            height: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            overflow: hidden;
+        .method-name {
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        .progress {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary), var(--success));
-            border-radius: 6px;
-            width: 0%;
-            transition: width 0.8s ease;
-            box-shadow: 0 0 10px rgba(39, 174, 96, 0.3);
+        .method-accuracy {
+            font-size: 0.9rem;
+            color: #aaa;
         }
 
-        .dua-section {
-            background: rgba(26, 93, 56, 0.2);
+        .instructions {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
             border-radius: var(--radius);
-            padding: 25px;
             margin-top: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .dua-text {
-            font-size: 1.3rem;
-            text-align: center;
-            line-height: 1.8;
-            font-weight: 500;
-            color: #e0e0e0;
+        .instructions h3 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .dua-reference {
-            text-align: center;
-            margin-top: 15px;
-            font-style: italic;
-            opacity: 0.8;
+        .instructions ul {
+            padding-right: 20px;
+            margin-bottom: 15px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .instructions li i {
+            color: var(--secondary);
+            margin-top: 5px;
         }
 
         footer {
@@ -371,15 +395,6 @@
                 font-size: 1.8rem;
             }
             
-            .countdown-item {
-                min-width: 75px;
-                padding: 15px 10px;
-            }
-            
-            .countdown-value {
-                font-size: 2rem;
-            }
-            
             .info-item {
                 flex-direction: column;
                 gap: 5px;
@@ -387,6 +402,10 @@
             
             .info-value {
                 text-align: right;
+            }
+            
+            .methods-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
         }
 
@@ -397,19 +416,6 @@
             
             .card {
                 padding: 20px;
-            }
-            
-            .countdown {
-                gap: 8px;
-            }
-            
-            .countdown-item {
-                min-width: 65px;
-                padding: 12px 8px;
-            }
-            
-            .countdown-value {
-                font-size: 1.6rem;
             }
             
             .btn {
@@ -432,6 +438,29 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+        
+        .permission-dialog {
+            background: rgba(30, 40, 50, 0.95);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            border: 2px solid var(--gold);
+            max-width: 500px;
+            margin: 20px auto;
+            display: none;
+        }
+        
+        .permission-dialog h3 {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        
+        .dialog-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -443,309 +472,383 @@
         <header>
             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23d4af37' d='M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A1,1 0 0,0 11,7A1,1 0 0,0 12,8A1,1 0 0,0 13,7A1,1 0 0,0 12,6M6.94,7.82L5.76,8.99L7.17,10.4L8.35,9.22L6.94,7.82M17.06,7.82L15.65,9.22L16.83,10.4L18.24,9.01L17.06,7.82M12,10C9.24,10 7,12.24 7,15A3,3 0 0,0 10,18C10.64,18 11.23,17.77 11.71,17.41C11.4,16.86 11.2,16.24 11.2,15.58C11.2,14.25 12.17,13.15 13.45,13C13.78,12.41 14.33,12 15,12C15.67,12 16.22,12.41 16.55,13C17.83,13.15 18.8,14.25 18.8,15.58C18.8,16.24 18.6,16.86 18.29,17.41C18.77,17.77 19.36,18 20,18A3,3 0 0,0 23,15C23,12.24 20.76,10 18,10H12Z'/%3E%3C/svg%3E" 
                  alt="Prayer" class="prayer-animation">
-            <h1><i class="fas fa-mosque"></i> تذكير دعاء العهد بعد صلاة الفجر</h1>
-            <p>تطبيق لمساعدتك على الالتزام بقراءة دعاء العهد بعد صلاة الفجر مباشرة</p>
+            <h1><i class="fas fa-location-dot"></i> تحديد الموقع الجغرافي الدقيق</h1>
+            <p>تحديد دقيق لموقعك الجغرافي لضمان دقة أوقات الصلاة</p>
         </header>
         
         <div class="main-content">
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-clock"></i> مواعيد الصلاة اليوم</h2>
+                <h2 class="card-title"><i class="fas fa-map-location-dot"></i> معلومات موقعك</h2>
+                
+                <div class="location-status">
+                    <div>
+                        <span class="status-indicator status-warning" id="status-indicator"></span>
+                        <span>حالة الموقع:</span>
+                    </div>
+                    <span id="location-status">جارٍ التحديد...</span>
+                </div>
+                
                 <div class="info-group">
                     <div class="info-item">
-                        <span class="info-label"><i class="fas fa-sun"></i> وقت صلاة الفجر:</span>
-                        <span class="info-value" id="fajr-time">04:25 صباحاً</span>
+                        <span class="info-label"><i class="fas fa-latitude"></i> خط العرض:</span>
+                        <span class="info-value" id="latitude">--</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label"><i class="fas fa-bell"></i> موعد التذكير:</span>
-                        <span class="info-value" id="reminder-time">04:30 صباحاً</span>
+                        <span class="info-label"><i class="fas fa-longitude"></i> خط الطول:</span>
+                        <span class="info-value" id="longitude">--</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label"><i class="fas fa-map-marker-alt"></i> موقعك الحالي:</span>
-                        <span class="info-value" id="location">مكة المكرمة، السعودية</span>
+                        <span class="info-label"><i class="fas fa-map-marker-alt"></i> الموقع التقريبي:</span>
+                        <span class="info-value" id="location-name">--</span>
                     </div>
                 </div>
                 
-                <div class="progress-container">
-                    <div class="progress-label">
-                        <span><i class="fas fa-hourglass-start"></i> بداية الفجر</span>
-                        <span><i class="fas fa-hourglass-end"></i> وقت التذكير</span>
+                <h2 class="card-title"><i class="fas fa-bullseye"></i> دقة تحديد الموقع</h2>
+                
+                <div class="accuracy-meter">
+                    <div class="meter-labels">
+                        <span>منخفضة</span>
+                        <span>متوسطة</span>
+                        <span>عالية</span>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress" id="progress-bar" style="width: 65%"></div>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="meter-fill"></div>
+                        <div class="meter-indicator" id="meter-indicator"></div>
+                    </div>
+                    <div class="accuracy-value" id="accuracy-value">--</div>
+                </div>
+                
+                <div class="methods-grid">
+                    <div class="method-card">
+                        <div class="method-icon"><i class="fas fa-satellite"></i></div>
+                        <div class="method-name">GPS</div>
+                        <div class="method-accuracy">5-20 متر</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon"><i class="fas fa-wifi"></i></div>
+                        <div class="method-name">Wi-Fi</div>
+                        <div class="method-accuracy">20-100 متر</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon"><i class="fas fa-tower-cell"></i></div>
+                        <div class="method-name">برج الجوال</div>
+                        <div class="method-accuracy">300-1000 متر</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon"><i class="fas fa-globe"></i></div>
+                        <div class="method-name">عنوان IP</div>
+                        <div class="method-accuracy">10-100 كم</div>
                     </div>
                 </div>
                 
-                <h2 class="card-title"><i class="fas fa-hourglass-half"></i> الوقت المتبقي للتذكير</h2>
-                <div class="countdown">
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="hours">08</span>
-                        <span class="countdown-label">ساعات</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="minutes">42</span>
-                        <span class="countdown-label">دقائق</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="seconds">18</span>
-                        <span class="countdown-label">ثواني</span>
-                    </div>
-                </div>
+                <button class="btn btn-primary" id="get-location-btn">
+                    <i class="fas fa-location-crosshairs"></i> تحديث الموقع
+                </button>
                 
-                <button class="btn btn-primary" id="location-btn">
-                    <i class="fas fa-sync-alt"></i> تحديث الموقع والمواعيد
+                <button class="btn" id="manual-location-btn">
+                    <i class="fas fa-map-pin"></i> تحديد الموقع يدوياً
                 </button>
             </div>
             
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-bell"></i> إدارة الإشعارات</h2>
-                
-                <div class="notification-section">
-                    <div class="notification-status">
-                        <div>
-                            <span class="status-indicator status-active"></span>
-                            <span>حالة الإشعارات:</span>
-                        </div>
-                        <span id="notification-status">مفعّلة</span>
-                    </div>
-                    
-                    <button class="btn btn-gold" id="notification-btn">
-                        <i class="fas fa-bell"></i> الإشعارات مفعّلة
-                    </button>
-                    
-                    <button class="btn" id="test-notification">
-                        <i class="fas fa-check-circle"></i> اختبار الإشعار الآن
-                    </button>
-                </div>
+                <h2 class="card-title"><i class="fas fa-gears"></i> إعدادات الدقة</h2>
                 
                 <div class="location-section">
-                    <h2 class="card-title"><i class="fas fa-map-marked-alt"></i> إعدادات الموقع</h2>
                     <div class="location-info">
-                        <p><i class="fas fa-info-circle"></i> يستخدم التطبيق موقعك لتحديد أوقات الصلاة بدقة</p>
+                        <p><i class="fas fa-lightbulb"></i> لتحسين دقة الموقع، يرجى تفعيل الخيارات التالية:</p>
                     </div>
-                    <button class="btn" id="manual-location">
-                        <i class="fas fa-map-pin"></i> تعديل الموقع يدويًا
-                    </button>
+                    
+                    <div class="settings-group">
+                        <div class="info-item">
+                            <span class="info-label"><i class="fas fa-map-pin"></i> تحديد دقيق:</span>
+                            <label class="switch">
+                                <input type="checkbox" id="high-accuracy" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="info-item">
+                            <span class="info-label"><i class="fas fa-clock"></i> مهلة الانتظار:</span>
+                            <select id="timeout-select" style="padding: 8px; border-radius: 8px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.1);">
+                                <option value="5000">5 ثواني</option>
+                                <option value="10000" selected>10 ثواني</option>
+                                <option value="15000">15 ثواني</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
+                
+                <div class="instructions">
+                    <h3><i class="fas fa-circle-info"></i> نصائح لتحسين الدقة</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> تفعيل خدمات الموقع (GPS/Wi-Fi) على جهازك</li>
+                        <li><i class="fas fa-check-circle"></i> الخروج إلى مكان مفتوح لتحسين إشارة GPS</li>
+                        <li><i class="fas fa-check-circle"></i> التأكد من اتصال Wi-Fi في الأماكن المغلقة</li>
+                        <li><i class="fas fa-check-circle"></i> تحديث المتصفح إلى أحدث نسخة</li>
+                        <li><i class="fas fa-check-circle"></i> استخدام HTTPS لتحسين الدقة والأمان</li>
+                    </ul>
+                </div>
+                
+                <button class="btn btn-gold" id="location-help-btn">
+                    <i class="fas fa-question-circle"></i> مساعدة في مشاكل الموقع
+                </button>
             </div>
         </div>
         
-        <div class="dua-section">
-            <p class="dua-text">"اللهم ربّ النور العظيم، والبرهان المبين، ربّ السراج المنير، وخالق الخلق أجمعين..."</p>
-            <p class="dua-reference">دعاء العهد - مفاتيح الجنان</p>
+        <div class="permission-dialog" id="permission-dialog">
+            <h3><i class="fas fa-location-dot"></i> إذن الوصول إلى الموقع</h3>
+            <p>يحتاج التطبيق إلى إذنك للوصول إلى موقعك الجغرافي لتحديد أوقات الصلاة بدقة.</p>
+            <p>الرجاء منح الإذن لاستخدام كامل مزايا التطبيق.</p>
+            <div class="dialog-buttons">
+                <button class="btn btn-gold" id="allow-permission">
+                    <i class="fas fa-check"></i> السماح
+                </button>
+                <button class="btn btn-danger" id="deny-permission">
+                    <i class="fas fa-times"></i> رفض
+                </button>
+            </div>
         </div>
         
         <footer>
-            <p><i class="fas fa-code"></i> تم التطوير بلغات الويب الحديثة | <i class="fas fa-calendar-alt"></i> 12 يوليو 2025</p>
-            <p>تطبيق تذكير دعاء العهد بعد صلاة الفجر | نسخة 2.0</p>
+            <p><i class="fas fa-code"></i> تطبيق تذكير دعاء العهد | نظام تحديد الموقع الجغرافي الدقيق</p>
+            <p>تم التطوير باستخدام تقنيات HTML5 Geolocation API</p>
         </footer>
     </div>
 
     <script>
         // عناصر DOM
-        const fajrTimeElement = document.getElementById('fajr-time');
-        const reminderTimeElement = document.getElementById('reminder-time');
-        const locationElement = document.getElementById('location');
-        const hoursElement = document.getElementById('hours');
-        const minutesElement = document.getElementById('minutes');
-        const secondsElement = document.getElementById('seconds');
-        const notificationBtn = document.getElementById('notification-btn');
-        const testNotificationBtn = document.getElementById('test-notification');
-        const locationBtn = document.getElementById('location-btn');
-        const manualLocationBtn = document.getElementById('manual-location');
-        const notificationStatusElement = document.getElementById('notification-status');
+        const latitudeElement = document.getElementById('latitude');
+        const longitudeElement = document.getElementById('longitude');
+        const locationNameElement = document.getElementById('location-name');
+        const locationStatusElement = document.getElementById('location-status');
         const statusIndicator = document.getElementById('status-indicator');
-        const progressBar = document.getElementById('progress-bar');
+        const accuracyValueElement = document.getElementById('accuracy-value');
+        const meterFill = document.getElementById('meter-fill');
+        const meterIndicator = document.getElementById('meter-indicator');
+        const getLocationBtn = document.getElementById('get-location-btn');
+        const highAccuracyToggle = document.getElementById('high-accuracy');
+        const timeoutSelect = document.getElementById('timeout-select');
+        const permissionDialog = document.getElementById('permission-dialog');
+        const allowPermissionBtn = document.getElementById('allow-permission');
+        const denyPermissionBtn = document.getElementById('deny-permission');
 
-        // تاريخ اليوم: 12 يوليو 2025
-        const currentDate = new Date(2025, 6, 12); // الشهر يبدأ من 0 (6 = يوليو)
-        
-        // أوقات الصلاة لليوم الحالي (مثال لمكة المكرمة)
-        const prayerTimes = {
-            fajr: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 4, 25),
-            reminder: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 4, 30)
-        };
-
-        // دالة التهيئة
-        function initApp() {
-            updatePrayerTimesUI();
-            startCountdown();
-            setupEventListeners();
-        }
-
-        // تحديث واجهة مواعيد الصلاة
-        function updatePrayerTimesUI() {
-            fajrTimeElement.textContent = formatTime(prayerTimes.fajr);
-            reminderTimeElement.textContent = formatTime(prayerTimes.reminder);
-        }
-
-        // بدء العد التنازلي الدقيق
-        function startCountdown() {
-            updateCountdown(); // تحديث فوري
-            
-            // تحديث كل ثانية
-            setInterval(updateCountdown, 1000);
-        }
-
-        // تحديث العد التنازلي
-        function updateCountdown() {
-            const now = new Date();
-            const diff = prayerTimes.reminder - now;
-            
-            if (diff <= 0) {
-                // إذا انتهى الوقت، إعادة تعيين لليوم التالي
-                resetForNextDay();
-                return;
-            }
-            
-            // حساب الساعات، الدقائق، الثواني
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            // تحديث واجهة المستخدم
-            hoursElement.textContent = hours.toString().padStart(2, '0');
-            minutesElement.textContent = minutes.toString().padStart(2, '0');
-            secondsElement.textContent = seconds.toString().padStart(2, '0');
-            
-            // تحديث شريط التقدم
-            updateProgressBar(now);
-        }
-
-        // تحديث شريط التقدم
-        function updateProgressBar(now) {
-            const totalDuration = prayerTimes.reminder - prayerTimes.fajr;
-            const elapsed = now - prayerTimes.fajr;
-            let progress = 0;
-            
-            if (now < prayerTimes.fajr) {
-                progress = 0;
-            } else if (now > prayerTimes.reminder) {
-                progress = 100;
+        // إظهار طلب الإذن عند التحميل
+        window.addEventListener('load', () => {
+            // إظهار طلب الإذن فقط إذا لم يكن مسموحاً مسبقاً
+            if (navigator.permissions) {
+                navigator.permissions.query({name: 'geolocation'}).then(permissionStatus => {
+                    if (permissionStatus.state === 'prompt') {
+                        setTimeout(() => {
+                            permissionDialog.style.display = 'block';
+                        }, 1000);
+                    }
+                });
             } else {
-                progress = (elapsed / totalDuration) * 100;
+                // المتصفحات التي لا تدعم navigator.permissions
+                setTimeout(() => {
+                    permissionDialog.style.display = 'block';
+                }, 1000);
             }
-            
-            progressBar.style.width = `${progress}%`;
-        }
+        });
 
-        // إعادة التعيين لليوم التالي
-        function resetForNextDay() {
-            // إضافة يوم واحد
-            const nextDay = new Date(currentDate);
-            nextDay.setDate(currentDate.getDate() + 1);
-            
-            // تحديث أوقات الصلاة (في تطبيق حقيقي سيتم جلبها من API)
-            prayerTimes.fajr = new Date(nextDay.getFullYear(), nextDay.getMonth(), nextDay.getDate(), 4, 25);
-            prayerTimes.reminder = new Date(nextDay.getFullYear(), nextDay.getMonth(), nextDay.getDate(), 4, 30);
-            
-            // تحديث واجهة المستخدم
-            updatePrayerTimesUI();
-        }
+        // معالجة اختيارات الإذن
+        allowPermissionBtn.addEventListener('click', () => {
+            permissionDialog.style.display = 'none';
+            getLocation();
+        });
 
-        // تنسيق الوقت
-        function formatTime(date) {
-            const hours = date.getHours();
-            const minutes = date.getMinutes();
-            const ampm = hours >= 12 ? 'مساءً' : 'صباحاً';
-            const formattedHours = hours % 12 || 12;
-            
-            return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
-        }
+        denyPermissionBtn.addEventListener('click', () => {
+            permissionDialog.style.display = 'none';
+            updateLocationStatus('تم رفض إذن الموقع', 'status-inactive');
+        });
 
-        // تفعيل الإشعارات
-        function enableNotifications() {
-            if (!('Notification' in window)) {
-                alert('المتصفح لا يدعم الإشعارات. الرجاء استخدام متصفح حديث.');
+        // دالة تحديد الموقع الجغرافي
+        function getLocation() {
+            updateLocationStatus('جارٍ تحديد موقعك...', 'status-warning');
+            
+            const highAccuracy = highAccuracyToggle.checked;
+            const timeout = parseInt(timeoutSelect.value);
+            
+            const options = {
+                enableHighAccuracy: highAccuracy,
+                timeout: timeout,
+                maximumAge: 0
+            };
+            
+            if (!navigator.geolocation) {
+                updateLocationStatus('المتصفح لا يدعم خدمة الموقع', 'status-inactive');
                 return;
             }
             
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    notificationStatusElement.textContent = 'مفعّلة';
-                    statusIndicator.className = 'status-indicator status-active';
-                    notificationBtn.innerHTML = '<i class="fas fa-bell"></i> الإشعارات مفعّلة';
-                    notificationBtn.classList.remove('btn-gold');
-                    notificationBtn.classList.add('btn-gold');
-                    
-                    // إرسال إشعار تأكيد
-                    sendNotification('تم تفعيل الإشعارات', 'ستتلقى تذكيرًا بقراءة دعاء العهد بعد صلاة الفجر');
-                } else {
-                    alert('تم رفض الإذن للإشعارات. الرجاء تفعيلها يدويًا في إعدادات المتصفح.');
+            navigator.geolocation.getCurrentPosition(
+                successCallback,
+                errorCallback,
+                options
+            );
+        }
+
+        // معالجة نجاح تحديد الموقع
+        function successCallback(position) {
+            const { latitude, longitude, accuracy } = position.coords;
+            
+            // تحديث واجهة المستخدم
+            latitudeElement.textContent = latitude.toFixed(6);
+            longitudeElement.textContent = longitude.toFixed(6);
+            accuracyValueElement.textContent = `${Math.round(accuracy)} متر`;
+            
+            // تحديث شريط الدقة
+            updateAccuracyMeter(accuracy);
+            
+            // الحصول على اسم الموقع
+            getLocationName(latitude, longitude);
+            
+            // تحديث الحالة
+            updateLocationStatus('تم تحديد الموقع بنجاح', 'status-active');
+            
+            // تخزين الموقع في localStorage
+            localStorage.setItem('userLocation', JSON.stringify({
+                lat: latitude,
+                lng: longitude,
+                accuracy: accuracy,
+                timestamp: new Date().getTime()
+            }));
+        }
+
+        // تحديث شريط الدقة
+        function updateAccuracyMeter(accuracy) {
+            // حساب النسبة المئوية للدقة (كلما قل الرقم زادت الدقة)
+            let accuracyPercentage;
+            if (accuracy < 20) {
+                accuracyPercentage = 95 + (20 - accuracy); // 95-100%
+            } else if (accuracy < 50) {
+                accuracyPercentage = 80 + (50 - accuracy) / 30 * 15; // 80-95%
+            } else if (accuracy < 100) {
+                accuracyPercentage = 60 + (100 - accuracy) / 50 * 20; // 60-80%
+            } else if (accuracy < 500) {
+                accuracyPercentage = 30 + (500 - accuracy) / 400 * 30; // 30-60%
+            } else {
+                accuracyPercentage = accuracy > 1000 ? 5 : 30 * (1000 / accuracy);
+            }
+            
+            accuracyPercentage = Math.min(100, Math.max(5, accuracyPercentage));
+            
+            // تحديث شريط الدقة
+            meterFill.style.width = `${accuracyPercentage}%`;
+            meterIndicator.style.left = `${accuracyPercentage}%`;
+            
+            // تلوين المؤشر حسب الدقة
+            if (accuracy < 20) {
+                meterFill.style.background = 'linear-gradient(to right, var(--danger), var(--warning), var(--success))';
+            } else if (accuracy < 100) {
+                meterFill.style.background = 'linear-gradient(to right, var(--danger), var(--warning))';
+            } else {
+                meterFill.style.background = 'var(--danger)';
+            }
+        }
+
+        // معالجة أخطاء تحديد الموقع
+        function errorCallback(error) {
+            let errorMessage;
+            
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage = "تم رفض إذن الموقع. الرجاء تفعيل الإذن في إعدادات المتصفح.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage = "معلومات الموقع غير متوفرة.";
+                    break;
+                case error.TIMEOUT:
+                    errorMessage = "انتهى الوقت المخصص لتحديد الموقع. الرجاء المحاولة مرة أخرى.";
+                    break;
+                default:
+                    errorMessage = "حدث خطأ غير متوقع أثناء تحديد الموقع.";
+            }
+            
+            updateLocationStatus(errorMessage, 'status-inactive');
+            
+            // محاولة استخدام آخر موقع مخزن
+            const savedLocation = localStorage.getItem('userLocation');
+            if (savedLocation) {
+                const location = JSON.parse(savedLocation);
+                latitudeElement.textContent = location.lat.toFixed(6);
+                longitudeElement.textContent = location.lng.toFixed(6);
+                accuracyValueElement.textContent = `${Math.round(location.accuracy)} متر (بيانات قديمة)`;
+                updateAccuracyMeter(location.accuracy);
+                getLocationName(location.lat, location.lng);
+            }
+        }
+
+        // تحديث حالة الموقع
+        function updateLocationStatus(message, statusClass) {
+            locationStatusElement.textContent = message;
+            statusIndicator.className = 'status-indicator ' + statusClass;
+        }
+
+        // الحصول على اسم الموقع باستخدام Geocoding API
+        function getLocationName(latitude, longitude) {
+            // في التطبيق الحقيقي، استخدم خدمة مثل OpenStreetMap Nominatim
+            // هذا مثال محاكاة لأغراض العرض
+            
+            const locations = [
+                { name: "مكة المكرمة, السعودية", lat: 21.4225, lng: 39.8262 },
+                { name: "المدينة المنورة, السعودية", lat: 24.5247, lng: 39.5692 },
+                { name: "الرياض, السعودية", lat: 24.7136, lng: 46.6753 },
+                { name: "جدة, السعودية", lat: 21.5433, lng: 39.1728 }
+            ];
+            
+            // البحث عن أقرب موقع
+            let closestLocation = null;
+            let minDistance = Infinity;
+            
+            locations.forEach(loc => {
+                const distance = Math.sqrt(
+                    Math.pow(loc.lat - latitude, 2) + Math.pow(loc.lng - longitude, 2)
+                );
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestLocation = loc;
                 }
             });
-        }
-
-        // إرسال إشعار
-        function sendNotification(title = 'تذكير دعاء العهد', message = 'حان وقت قراءة دعاء العهد بعد صلاة الفجر') {
-            if (!('Notification' in window) || Notification.permission !== 'granted') {
-                return;
-            }
             
-            const notification = new Notification(title, {
-                body: message,
-                icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZDRhZjM3IiBkPSJNMjU2IDQ4QzE0MS4xIDQ4IDQ4IDE0MS4xIDQ4IDI1NnM5My4xIDIwOCAyMDggMjA4IDIwOC05My4xIDIwOC0yMDhTMzcwLjkgNDggMjU2IDQ4em0wIDM4NGMtOTcuMiAwLTE3Ni03OC44LTE3Ni0xNzZTMTU4LjggODAgMjU2IDgwczE3NiA3OC44IDE3NiAxNzYtNzguOCAxNzYtMTc2IDE3NnptMzItMTYwaC02NGMtOC44IDAtMTYgNy4yLTE2IDE2czcuMiAxNiAxNiAxNmg2NGM4LjggMCAxNi03LjIgMTYtMTZzLTcuMi0xNi0xNi0xNnptLTk2LTk2YzAtOC44IDcuMi0xNiAxNi0xNmg2NGM4LjggMCAxNiA3LjIgMTYgMTZzLTcuMiAxNi0xNiAxNmgtNjRjLTguOCAwLTE2LTcuMi0xNi0xNnptMTYwIDk2aC02NGMtOC44IDAtMTYgNy4yLTE2IDE2czcuMiAxNiAxNiAxNmg2NGM4LjggMCAxNi03LjIgMTYtMTZzLTcuMi0xNi0xNi0xNnptLTk2LTk2YzAtOC44IDcuMi0xNiAxNi0xNmg2NGM4LjggMCAxNiA7LjIgMTYgMTZzLTcuMiAxNi0xNiAxNmgtNjRjLTguOCAwLTE2LTcuMi0xNi0xNnoiLz48L3N2Zz4='
-            });
-            
-            notification.onclick = () => {
-                window.focus();
-            };
-        }
-
-        // اختبار الإشعار
-        function testNotification() {
-            if (Notification.permission === 'granted') {
-                sendNotification('اختبار الإشعار', 'هذا اختبار لتأكد من عمل نظام التذكير بشكل صحيح');
+            if (closestLocation) {
+                locationNameElement.textContent = closestLocation.name;
             } else {
-                alert('الرجاء تفعيل الإشعارات أولاً');
+                locationNameElement.textContent = "موقع غير معروف";
             }
         }
 
         // إعداد مستمعي الأحداث
-        function setupEventListeners() {
-            notificationBtn.addEventListener('click', enableNotifications);
-            testNotificationBtn.addEventListener('click', testNotification);
-            
-            locationBtn.addEventListener('click', () => {
-                // محاكاة لتحديث الموقع
-                locationElement.textContent = "مكة المكرمة، السعودية";
-                sendNotification('تم تحديث الموقع', 'تم تحديث أوقات الصلاة حسب موقعك الجديد');
-            });
-            
-            manualLocationBtn.addEventListener('click', () => {
-                // محاكاة لواجهة الإدخال اليدوي
-                const city = prompt("الرجاء إدخال مدينتك:");
-                if (city) {
-                    locationElement.textContent = city + "، السعودية";
-                    sendNotification('تم تحديث الموقع', `تم تعيين موقعك إلى ${city}`);
+        getLocationBtn.addEventListener('click', getLocation);
+        
+        highAccuracyToggle.addEventListener('change', () => {
+            if (highAccuracyToggle.checked) {
+                alert("تم تفعيل وضع الدقة العالية. سيستهلك المزيد من البطارية لكنه يعطي نتائج أدق.");
+            }
+        });
+        
+        // تحديد الموقع يدوياً
+        document.getElementById('manual-location-btn').addEventListener('click', () => {
+            const city = prompt("الرجاء إدخال مدينتك:");
+            if (city) {
+                locationNameElement.textContent = city + "، السعودية";
+                alert(`تم تعيين موقعك إلى ${city}. سيتم استخدام أوقات الصلاة لهذه المنطقة.`);
+            }
+        });
+        
+        // مساعدة في مشاكل الموقع
+        document.getElementById('location-help-btn').addEventListener('click', () => {
+            alert("لحل مشاكل تحديد الموقع:\n\n1. تأكد من تفعيل خدمات الموقع على جهازك\n2. تأكد من منح الإذن للمتصفح للوصول إلى موقعك\n3. حاول الخروج إلى مكان مفتوح لتحسين إشارة GPS\n4. تأكد من اتصالك بالإنترنت");
+        });
+
+        // محاولة تحديد الموقع تلقائياً عند التحميل إذا كان مسموحاً
+        if (navigator.geolocation) {
+            navigator.permissions.query({name: 'geolocation'}).then(permissionStatus => {
+                if (permissionStatus.state === 'granted') {
+                    getLocation();
                 }
             });
         }
-
-        // تسجيل Service Worker للعمل في الخلفية
-        function registerServiceWorker() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(registration => {
-                        console.log('Service Worker registered with scope:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.error('Service Worker registration failed:', error);
-                    });
-            }
-        }
-
-        // تهيئة التطبيق عند تحميل الصفحة
-        window.addEventListener('load', () => {
-            initApp();
-            registerServiceWorker();
-            
-            // تفعيل الإشعارات تلقائيًا إذا كانت مسموحة
-            if (Notification.permission === 'granted') {
-                notificationStatusElement.textContent = 'مفعّلة';
-                statusIndicator.className = 'status-indicator status-active';
-                notificationBtn.innerHTML = '<i class="fas fa-bell"></i> الإشعارات مفعّلة';
-            }
-        });
     </script>
 </body>
 </html>
